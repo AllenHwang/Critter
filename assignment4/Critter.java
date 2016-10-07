@@ -167,10 +167,49 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
+		while(!population.isEmpty())
+		{
+			population.remove(0);
+		}
 	}
 	
 	public static void worldTimeStep() {
 	}
 	
-	public static void displayWorld() {}
+	public static void displayWorld() {
+		int width = Params.world_width + 2;
+		int height = Params.world_height + 2;
+		char[][] world = new char[height][width];
+		for(int y = 0; y < height -1; y++)
+		{
+			if(y ==0 || y ==height -1)
+			{
+				world[y][0] = '+';
+				world[y][width-1] = '+';
+			}
+			else
+			{
+				world[y][0] = '|';
+				world[y][width-1] = '|';
+			}
+		}
+		for(int x = 1; x < width -2; x++)
+		{
+			world[0][x] = '-';
+			world[width-1][x] = '-';
+		}
+		
+		for(int i = 0; i < population.size();i++)
+		{
+			int x = population.get(i).x_coord +1;
+			int y = population.get(i).y_coord +1;
+			
+			world[y][x] =  population.get(i).toString().charAt(0);
+		}
+		for(int i = 0; i<height; i++)
+		{
+			String print = new String(world[i]);
+			System.out.print(print);
+		}
+	}
 }
