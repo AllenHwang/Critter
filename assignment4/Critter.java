@@ -50,9 +50,33 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
+		switch(direction)
+		{
+		case 0: x_coord++;
+		break;
+		case 1: x_coord++;y_coord--;
+		break;
+		case 2:y_coord--;
+		break;
+		case 3 :y_coord--;x_coord++;
+		break;
+		case 4 : x_coord--;
+		break;
+		case 5 : y_coord++;x_coord--;
+		break;
+		case 6:y_coord++;
+		break;
+		case 7: y_coord++;x_coord++;
+		break;
+		}
+		x_coord =(Params.world_width + x_coord) % Params.world_width;
+		y_coord = (Params.world_height + y_coord) % Params.world_height ;
+		energy -= Params.walk_energy_cost;
 	}
 	
 	protected final void run(int direction) {
+		
+		energy -= Params.run_energy_cost;
 		
 	}
 	
@@ -174,6 +198,12 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
+		for(int x = 0; x < population.size(); x++)
+		{
+			population.get(x).doTimeStep();
+		}
+		resolveFights();
+
 	}
 	
 	public static void displayWorld() {
@@ -198,7 +228,13 @@ public abstract class Critter {
 			world[0][x] = '-';
 			world[width-1][x] = '-';
 		}
-		
+		for(int y = 1; y < height -2; y++)
+		{
+			for(int x = 1; x < width -2; x++)
+			{
+				world[y][x] = ' ';
+			}
+		}
 		for(int i = 0; i < population.size();i++)
 		{
 			int x = population.get(i).x_coord +1;
@@ -211,5 +247,25 @@ public abstract class Critter {
 			String print = new String(world[i]);
 			System.out.print(print);
 		}
+	}
+	private static void resolveFights()
+	{
+		/*	for(int x = 0; x < population.size(); x++)
+		{
+			Critter first = population.get(x);
+			int x_c = population.get(x).x_coord;
+			int y_c = population.get(x).y_coord;
+			for(int y = x + 1; y < population.size();y++)
+			{
+				Critter second = population.get(y);
+				int x_c2 = population.get(y).x_coord;
+				int y_c2 = population.get(y).y_coord;
+				if(x_c==x_c2&&y_c==y_c2)
+				{
+					if(first.fight(second.toString()));
+				}
+			}
+		}
+		*/
 	}
 }

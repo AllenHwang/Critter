@@ -68,9 +68,30 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
-        
-        System.out.println("GLHF");
-        
+        String input = "";
+        do
+        {
+            input = kb.nextLine();
+            if(input.equals("show"))
+            {
+            	Critter.displayWorld();
+            }
+            else if(input.contains("step"))
+            {
+            	int parse =input.indexOf(' ');
+            	if(parse < 0)
+            		Critter.worldTimeStep();
+            	else
+            	{
+            		String sub = input.substring(parse + 1);
+            		int loop = Integer.parseInt(sub);
+            		for(int x = 0; x < loop; x++)
+            		{
+            			Critter.worldTimeStep();
+            		}
+            	}
+            }
+        }while(!input.equals("quit"));
         /* Write your code above */
         System.out.flush();
 
