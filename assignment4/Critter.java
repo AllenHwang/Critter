@@ -24,7 +24,7 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
-
+	private boolean hasMoved;
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
 		myPackage = Critter.class.getPackage().toString().split(" ")[1];
@@ -75,6 +75,27 @@ public abstract class Critter {
 	}
 	
 	protected final void run(int direction) {
+		switch(direction)
+		{
+		case 0: x_coord+=2;
+		break;
+		case 1: x_coord+=2;y_coord-=2;
+		break;
+		case 2:y_coord-=2;
+		break;
+		case 3 :y_coord-=2;x_coord+=2;
+		break;
+		case 4 : x_coord-=2;
+		break;
+		case 5 : y_coord+=2;x_coord-=2;
+		break;
+		case 6:y_coord+=2;
+		break;
+		case 7: y_coord+=2;x_coord+=2;
+		break;
+		}
+		x_coord =(Params.world_width + x_coord) % Params.world_width;
+		y_coord = (Params.world_height + y_coord) % Params.world_height ;
 		
 		energy -= Params.run_energy_cost;
 		
@@ -203,6 +224,15 @@ public abstract class Critter {
 			population.get(x).doTimeStep();
 		}
 		resolveFights();
+		//ReproduceStep();
+		population.addAll(babies);
+		babies.clear();
+		for(Critter c: population)
+		{
+			c.energy -= Params.rest_energy_cost;
+			if(c.energy <= 0)
+				population.remove(c);
+		}
 
 	}
 	
@@ -250,22 +280,42 @@ public abstract class Critter {
 	}
 	private static void resolveFights()
 	{
-		/*	for(int x = 0; x < population.size(); x++)
+			for(int x = 0; x < population.size(); x++)
 		{
 			Critter first = population.get(x);
+			if(first.energy <= 0)
+				continue;
 			int x_c = population.get(x).x_coord;
 			int y_c = population.get(x).y_coord;
 			for(int y = x + 1; y < population.size();y++)
 			{
 				Critter second = population.get(y);
+				if(second.energy<=0)
+					continue;
 				int x_c2 = population.get(y).x_coord;
 				int y_c2 = population.get(y).y_coord;
 				if(x_c==x_c2&&y_c==y_c2)
 				{
-					if(first.fight(second.toString()));
+					int firstDamage = 0;
+					int secondDamage = 0;
+					if(first.fight(second.toString()))
+						firstDamage = getRandomInt(first.energy);
+					if(second.fight(first.toString()))
+						secondDamage = getRandomInt(second.energy);
+					if(secondDamage > firstDamage)
+					{
+						second.energy += first.energy /2;
+						first.energy = 0;
+					}
+					else
+					{
+						first.energy += second.energy/2;
+						second.energy = 0;
+					}
 				}
 			}
+		
 		}
-		*/
 	}
 }
+	
