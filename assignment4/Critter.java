@@ -24,7 +24,7 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
-	private boolean hasMoved;
+	private boolean hasMoved = false;
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
 		myPackage = Critter.class.getPackage().toString().split(" ")[1];
@@ -50,58 +50,99 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
-		switch(direction)
+		if(!hasMoved)
 		{
-		case 0: x_coord++;
-		break;
-		case 1: x_coord++;y_coord--;
-		break;
-		case 2:y_coord--;
-		break;
-		case 3 :y_coord--;x_coord++;
-		break;
-		case 4 : x_coord--;
-		break;
-		case 5 : y_coord++;x_coord--;
-		break;
-		case 6:y_coord++;
-		break;
-		case 7: y_coord++;x_coord++;
-		break;
+			switch(direction)
+			{
+			case 0: x_coord++;
+			break;
+			case 1: x_coord++;y_coord--;
+			break;
+			case 2:y_coord--;
+			break;
+			case 3 :y_coord--;x_coord++;
+			break;
+			case 4 : x_coord--;
+			break;
+			case 5 : y_coord++;x_coord--;
+			break;
+			case 6:y_coord++;
+			break;
+			case 7: y_coord++;x_coord++;
+			break;
+			}
+			x_coord =(Params.world_width + x_coord) % Params.world_width;
+			y_coord = (Params.world_height + y_coord) % Params.world_height ;
+			energy -= Params.walk_energy_cost;
+			hasMoved=true;
 		}
-		x_coord =(Params.world_width + x_coord) % Params.world_width;
-		y_coord = (Params.world_height + y_coord) % Params.world_height ;
-		energy -= Params.walk_energy_cost;
+		else
+		{
+			energy -= Params.walk_energy_cost;
+		}
+
 	}
 	
 	protected final void run(int direction) {
+		if(!hasMoved)
+		{
 		switch(direction)
 		{
-		case 0: x_coord+=2;
-		break;
-		case 1: x_coord+=2;y_coord-=2;
-		break;
-		case 2:y_coord-=2;
-		break;
-		case 3 :y_coord-=2;x_coord+=2;
-		break;
-		case 4 : x_coord-=2;
-		break;
-		case 5 : y_coord+=2;x_coord-=2;
-		break;
-		case 6:y_coord+=2;
-		break;
-		case 7: y_coord+=2;x_coord+=2;
-		break;
-		}
+			case 0: x_coord+=2;
+			break;
+			case 1: x_coord+=2;y_coord-=2;
+			break;
+			case 2:y_coord-=2;
+			break;
+			case 3 :y_coord-=2;x_coord+=2;
+			break;
+			case 4 : x_coord-=2;
+			break;
+			case 5 : y_coord+=2;x_coord-=2;
+			break;
+			case 6:y_coord+=2;
+			break;
+			case 7: y_coord+=2;x_coord+=2;
+			break;
+			}
 		x_coord =(Params.world_width + x_coord) % Params.world_width;
 		y_coord = (Params.world_height + y_coord) % Params.world_height ;
-		
+		hasMoved = true;
 		energy -= Params.run_energy_cost;
-		
+		}
+		else
+			energy -= Params.run_energy_cost;
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		if(energy < Params.min_reproduce_energy)
+			return;
+		else
+		{
+			offspring.energy = energy/2;
+			energy =(int)Math.round(energy/2.0);
+			switch(direction)
+			{
+			case 0: offspring.x_coord = x_coord+1;
+			break;
+			case 1: offspring.x_coord = x_coord+1;offspring.y_coord = y_coord-1;
+			break;
+			case 2:offspring.y_coord = y_coord-1;
+			break;
+			case 3 :offspring.y_coord = y_coord-1;offspring.x_coord = x_coord-1;
+			break;
+			case 4 :offspring.x_coord = x_coord-1;
+			break;
+			case 5 :offspring.y_coord = y_coord+1;offspring.x_coord = x_coord-1;
+			break;
+			case 6:offspring.y_coord = y_coord+1;
+			break;
+			case 7: offspring.y_coord = y_coord+1;offspring.x_coord = x_coord+1;
+			break;
+			}
+			offspring.x_coord =(Params.world_width + x_coord) % Params.world_width;
+			offspring.y_coord = (Params.world_height + y_coord) % Params.world_height ;
+		}
 	}
 
 	public abstract void doTimeStep();
@@ -232,6 +273,8 @@ public abstract class Critter {
 			c.energy -= Params.rest_energy_cost;
 			if(c.energy <= 0)
 				population.remove(c);
+			else
+				c.hasMoved = false;
 		}
 
 	}
@@ -285,15 +328,15 @@ public abstract class Critter {
 			Critter first = population.get(x);
 			if(first.energy <= 0)
 				continue;
-			int x_c = population.get(x).x_coord;
-			int y_c = population.get(x).y_coord;
+			int x_c = first.x_coord;
+			int y_c = first.y_coord;
 			for(int y = x + 1; y < population.size();y++)
 			{
 				Critter second = population.get(y);
 				if(second.energy<=0)
 					continue;
-				int x_c2 = population.get(y).x_coord;
-				int y_c2 = population.get(y).y_coord;
+				int x_c2 = second.x_coord;
+				int y_c2 = second.y_coord;
 				if(x_c==x_c2&&y_c==y_c2)
 				{
 					int firstDamage = 0;
