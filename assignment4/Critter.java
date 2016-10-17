@@ -11,6 +11,7 @@
  */
 package assignment4;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -173,6 +174,46 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+		
+		// create new critter object
+		Class<?> crit_class = null;
+		
+		try {
+			crit_class = Class.forName(critter_class_name);
+		} catch (ClassNotFoundException e) {
+			throw new InvalidCritterException(critter_class_name);
+		}
+		
+		try {
+			Object critterNew = crit_class.getConstructor().newInstance();
+			
+			// initialize position of new critter
+			((Critter) critterNew).x_coord = Critter.getRandomInt(Params.world_width);
+			((Critter) critterNew).y_coord = Critter.getRandomInt(Params.world_height);
+			((Critter) critterNew).energy = Params.start_energy;
+			
+			// add critter to general population
+			population.add((Critter) critterNew);
+			
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -183,7 +224,19 @@ public abstract class Critter {
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
-	
+		
+		Class<?> crit_class;
+		try {
+			crit_class = Class.forName(critter_class_name);
+		} catch (ClassNotFoundException e) {
+			throw new InvalidCritterException(critter_class_name);
+		}
+		
+		for (Critter jiminy : population) {
+			if (jiminy.getClass().getName().equals(critter_class_name)) {
+				result.add(jiminy);
+			}
+		}
 		return result;
 	}
 	

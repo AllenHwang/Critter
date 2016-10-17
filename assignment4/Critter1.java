@@ -6,7 +6,7 @@ package assignment4;
  * sires one child for the entire duration of his lifetime. He also
  * has a high amount of health to begin with.
  */
-public class Critter1 extends Critter{
+public class Critter1 extends Critter {
 	
 	@Override
 	public String toString() { return "1"; }
@@ -15,6 +15,12 @@ public class Critter1 extends Critter{
 	
 	public Critter1() {
 		dir = Critter.getRandomInt(16);
+		try {
+			Critter.makeCritter(this.getClass().getName());
+		} catch (InvalidCritterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean fight(String not_used) {
