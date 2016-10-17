@@ -12,6 +12,7 @@
 package assignment4;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -173,7 +174,7 @@ public abstract class Critter {
 	 * @param critter_class_name
 	 * @throws InvalidCritterException
 	 */
-	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+public static void makeCritter(String critter_class_name) throws InvalidCritterException {
 		
 		// create new critter object
 		Class<?> crit_class = null;
@@ -239,6 +240,8 @@ public abstract class Critter {
 		}
 		return result;
 	}
+	
+
 	
 	/**
 	 * Prints out how many Critters of each type there are on the board.
@@ -347,16 +350,21 @@ public abstract class Critter {
 			int y = Critter.getRandomInt(Params.world_height);
 			a.setX_coord(x);
 			a.setY_coord(y);
+			population.add(a);
 		}
 		population.addAll(babies);
 		babies.clear();
-		for(Critter c: population)
+		for(int x = 0; x < population.size();x++)
 		{
-			c.energy -= Params.rest_energy_cost;
+			population.get(x).energy -= Params.rest_energy_cost;
+			population.get(x).hasMoved = false;
+		}
+		Iterator<Critter> iter = population.iterator();
+		while(iter.hasNext())
+		{
+			Critter c = iter.next();
 			if(c.energy <= 0)
-				population.remove(c);
-			else
-				c.hasMoved = false;
+				iter.remove();
 		}
 
 	}
@@ -369,7 +377,7 @@ public abstract class Critter {
 		int width = Params.world_width + 2;
 		int height = Params.world_height + 2;
 		char[][] world = new char[height][width];
-		for(int y = 0; y < height -1; y++)
+		for(int y = 0; y < height; y++)
 		{
 			if(y ==0 || y ==height -1)
 			{
@@ -382,14 +390,14 @@ public abstract class Critter {
 				world[y][width-1] = '|';
 			}
 		}
-		for(int x = 1; x < width -2; x++)
+		for(int x = 1; x < width - 1; x++)
 		{
 			world[0][x] = '-';
-			world[width-1][x] = '-';
+			world[height-1][x] = '-';
 		}
-		for(int y = 1; y < height -2; y++)
+		for(int y = 1; y < height -1; y++)
 		{
-			for(int x = 1; x < width -2; x++)
+			for(int x = 1; x < width -1; x++)
 			{
 				world[y][x] = ' ';
 			}
