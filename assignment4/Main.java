@@ -1,12 +1,11 @@
 /* CRITTERS Main.java
  * EE422C Project 4 submission by
- * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Allen Hwang
+ * ah45755
+ * 16445
+ * Sagar Krishnaraj
+ * sk37433
+ * 16455
  * Slip days used: <0>
  * Fall 2016
  */
@@ -86,7 +85,7 @@ public class Main {
 	            	{
 	            		Critter.worldTimeStep();
 	            	}
-	            	else if(parts.length == 2)
+	            	else if(parts.length == 2&&parts[0].equals("step"))
 	            	{
 	            		int stepLoop = Integer.parseInt(parts[1]);
 	            		for(int x = 0; x < stepLoop; x++)
@@ -96,12 +95,18 @@ public class Main {
 	            	}
 	            	else
 	            	{
-	            		throw new NoSuchMethodException();
+	            		throw new IllegalArgumentException();
 	            	}
 	            }
 	            else if(input.contains("seed"))
 	            {
-	            	
+	            	String[] parts = input.split(" ");
+	            	if(parts.length!= 2)
+	            		throw new IllegalArgumentException();
+	            	else
+	            	{
+	            		Critter.setSeed(Long.parseLong(parts[1]));
+	            	}
 	            }
 	            
 	            else if(input.contains("make"))
@@ -118,7 +123,7 @@ public class Main {
 	            }
 	            else
 	            {
-	            	throw new NoSuchMethodException();//throw exception; everything above is part of a big try catch block.
+	            	throw new IllegalArgumentException();//throw exception; everything above is part of a big try catch block.
 	            }
         	}
         	catch(NumberFormatException e)
@@ -129,7 +134,7 @@ public class Main {
         	{
         		System.out.println("error processing: " +input);
         	}
-        	catch(NoSuchMethodException e)
+        	catch(IllegalArgumentException e)
         	{
         		System.out.println("invalid command: " + input);
         	}

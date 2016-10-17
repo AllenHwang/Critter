@@ -1,12 +1,11 @@
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
- * Replace <...> with your actual data.
  * Allen Hwang
  * ah45755
  * 16445
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Sagar Krishnaraj
+ * sk37433
+ * 16455
  * Slip days used: <0>
  * Fall 2016
  */
@@ -273,6 +272,13 @@ public abstract class Critter {
 	}
 	/**
 	 * Steps the world once.
+	 * The order of the actions are as follows:
+	 * 1) All criters doTimeStep(which may or may not move)
+	 * 2) Conflicting Critters are resolved through fight(s)
+	 * 3) Algae are added into the world.
+	 * 4) Any offspring are added into the working population.
+	 * 5) Rest energy cost is applied
+	 * 6) Any dead critters (energy <= 0) are removed.
 	 */
 	public static void worldTimeStep() {
 		for(int x = 0; x < population.size(); x++)
@@ -301,7 +307,11 @@ public abstract class Critter {
 		}
 
 	}
-	
+	/**
+	 * Displays the world
+	 * It displays in a world_width +2 x world_height +2 grid
+	 * The +2 is to account for the border that is created.
+	 */
 	public static void displayWorld() {
 		int width = Params.world_width + 2;
 		int height = Params.world_height + 2;
@@ -344,6 +354,9 @@ public abstract class Critter {
 			System.out.println(print);
 		}
 	}
+	/**
+	 * A private method that resolve encounters between all critters. 
+	 */
 	private static void resolveFights()
 	{
 			for(int x = 0; x < population.size(); x++)

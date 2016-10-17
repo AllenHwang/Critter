@@ -1,3 +1,15 @@
+/*Critters Critter3.Java
+ * EE422C Project 4 submission by
+ * Allen Hwang
+ * ah45755
+ * 16445
+ * Sagar Krishnaraj
+ * sk37433
+ * 16455
+ * Slip days used: <0>
+ * Fall 2016
+ */ 
+ 
 package assignment4;
 /*
  * This critter either walks or runs, depending on if run is on cooldown.
