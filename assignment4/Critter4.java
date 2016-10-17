@@ -1,8 +1,16 @@
 package assignment4;
-
+/*
+ * This critter walks around the world
+ * Every time it walks, it changes its ability to fight
+ * Fight simply returns its current ability to fight
+ */
 public class Critter4 extends Critter{
-	boolean weaponDrawn = false;
+	boolean weaponDrawn;
 	
+	public Critter4()
+	{
+		weaponDrawn = false;
+	}
 	public String toString()
 	{
 		return "4";

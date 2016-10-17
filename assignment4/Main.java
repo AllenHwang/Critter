@@ -69,29 +69,72 @@ public class Main {
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
         String input = "";
+        boolean loop = true;
         do
         {
-            input = kb.nextLine();
-            if(input.equals("show"))
-            {
-            	Critter.displayWorld();
-            }
-            else if(input.contains("step"))
-            {
-            	int parse =input.indexOf(' ');
-            	if(parse < 0)
-            		Critter.worldTimeStep();
-            	else
-            	{
-            		String sub = input.substring(parse + 1);
-            		int loop = Integer.parseInt(sub);
-            		for(int x = 0; x < loop; x++)
-            		{
-            			Critter.worldTimeStep();
-            		}
-            	}
-            }
-        }while(!input.equals("quit"));
+        	try{
+	        	System.out.println("Input a command.");
+	            input = kb.nextLine();
+	            if(input.equals("show"))
+	            {
+	            	Critter.displayWorld();
+	            }
+	            else if(input.contains("step"))
+	            {
+	            	String[] parts = input.split(" ");
+	            	if(parts.length ==1&&input.equals("step"))
+	            	{
+	            		Critter.worldTimeStep();
+	            	}
+	            	else if(parts.length == 2)
+	            	{
+	            		int stepLoop = Integer.parseInt(parts[1]);
+	            		for(int x = 0; x < stepLoop; x++)
+	            		{
+	            			Critter.worldTimeStep();
+	            		}
+	            	}
+	            	else
+	            	{
+	            		throw new NoSuchMethodException();
+	            	}
+	            }
+	            else if(input.contains("seed"))
+	            {
+	            	
+	            }
+	            
+	            else if(input.contains("make"))
+	            {
+	            	Critter.makeCritter("TempString");
+	            }
+	            else if(input.contains("stats"))
+	            {
+	            	
+	            }
+	            else if(input.equals("quit"))
+	            {
+	            	loop = false;
+	            }
+	            else
+	            {
+	            	throw new NoSuchMethodException();//throw exception; everything above is part of a big try catch block.
+	            }
+        	}
+        	catch(NumberFormatException e)
+        	{
+        		System.out.println("error processing: " +input);
+        	}
+        	catch(InvalidCritterException e)
+        	{
+        		System.out.println("error processing: " +input);
+        	}
+        	catch(NoSuchMethodException e)
+        	{
+        		System.out.println("invalid command: " + input);
+        	}
+
+        }while(loop);
         /* Write your code above */
         System.out.flush();
 

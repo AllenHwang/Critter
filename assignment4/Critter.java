@@ -1,9 +1,9 @@
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
+ * Allen Hwang
+ * ah45755
+ * 16445
  * <Student2 Name>
  * <Student2 EID>
  * <Student2 5-digit Unique No.>
@@ -48,7 +48,12 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
-	
+	/**
+	 * Walks in a given direction; direction is determined from a number 0-7 and goes counter clockwise with 0 going to the right
+	 * It increases coordinates by one.
+	 * It decrements energy by walk energy.
+	 * @param direction direction the critter will walk.
+	 */
 	protected final void walk(int direction) {
 		if(!hasMoved)
 		{
@@ -82,7 +87,12 @@ public abstract class Critter {
 		}
 
 	}
-	
+	/**
+	 * Runs in a given direction, using 0-7, with 0 representing right and going counter clockwise incrementally.
+	 * It increases coordinates by two
+	 * It decrements energy by the run energy.
+	 * @param direction
+	 */
 	protected final void run(int direction) {
 		if(!hasMoved)
 		{
@@ -113,14 +123,18 @@ public abstract class Critter {
 		else
 			energy -= Params.run_energy_cost;
 	}
-	
+	/**
+	 * Creates a new offspring that has roughly half of its original energy
+	 * @param offspring the new Critter that will be created.
+	 * @param direction places the new offspring onto a random tile
+	 */
 	protected final void reproduce(Critter offspring, int direction) {
 		if(energy < Params.min_reproduce_energy)
 			return;
 		else
 		{
 			offspring.energy = energy/2;
-			energy =(int)Math.round(energy/2.0);
+			energy =(energy +1)/2;
 			switch(direction)
 			{
 			case 0: offspring.x_coord = x_coord+1;
@@ -141,7 +155,8 @@ public abstract class Critter {
 			break;
 			}
 			offspring.x_coord =(Params.world_width + x_coord) % Params.world_width;
-			offspring.y_coord = (Params.world_height + y_coord) % Params.world_height ;
+			offspring.y_coord = (Params.world_height + y_coord) % Params.world_height;
+			babies.add(offspring);
 		}
 	}
 
@@ -253,19 +268,27 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
-		while(!population.isEmpty())
-		{
-			population.remove(0);
-		}
+		population.clear();
+		babies.clear();
 	}
-	
+	/**
+	 * Steps the world once.
+	 */
 	public static void worldTimeStep() {
 		for(int x = 0; x < population.size(); x++)
 		{
 			population.get(x).doTimeStep();
 		}
 		resolveFights();
-		//ReproduceStep();
+		for(int i = 0; i < Params.refresh_algae_count;i++)
+		{
+			Algae a = new Algae();
+			a.setEnergy(Params.start_energy);
+			int x = Critter.getRandomInt(Params.world_width);
+			int y = Critter.getRandomInt(Params.world_height);
+			a.setX_coord(x);
+			a.setY_coord(y);
+		}
 		population.addAll(babies);
 		babies.clear();
 		for(Critter c: population)
@@ -318,13 +341,13 @@ public abstract class Critter {
 		for(int i = 0; i<height; i++)
 		{
 			String print = new String(world[i]);
-			System.out.print(print);
+			System.out.println(print);
 		}
 	}
 	private static void resolveFights()
 	{
 			for(int x = 0; x < population.size(); x++)
-		{
+			{
 			Critter first = population.get(x);
 			if(first.energy <= 0)
 				continue;
@@ -345,6 +368,10 @@ public abstract class Critter {
 						firstDamage = getRandomInt(first.energy);
 					if(second.fight(first.toString()))
 						secondDamage = getRandomInt(second.energy);
+					if(first.x_coord != x_c || first.y_coord != y_c)
+						break;
+					else if(second.x_coord != x_c2 || second.y_coord != y_c2)
+						continue;
 					if(secondDamage > firstDamage)
 					{
 						second.energy += first.energy /2;
