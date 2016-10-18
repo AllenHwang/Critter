@@ -163,6 +163,7 @@ public abstract class Critter {
 
 	public abstract void doTimeStep();
 	public abstract boolean fight(String oponent);
+	
 	/**
 	 *   create and initialize a Critter subclass.  
 	 *   critter_class_name must be the unqualified name of a concrete subclass of Critter, if not,
@@ -175,7 +176,8 @@ public abstract class Critter {
 	 * @param critter_class_name  
 	 * @throws InvalidCritterException 
 	 * */
-public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+	 
+	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
 		
 		// create new critter object
 		

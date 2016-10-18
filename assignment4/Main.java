@@ -10,6 +10,8 @@
  * Fall 2016
  */
 package assignment4; // cannot be in default package
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 
@@ -72,7 +74,6 @@ public class Main {
         do
         {
         	try{
-	        	System.out.println("Input a command.");
 	            input = kb.nextLine();
 	            if(input.equals("show"))
 	            {
@@ -111,11 +112,29 @@ public class Main {
 	            
 	            else if(input.contains("make"))
 	            {
-	            	Critter.makeCritter("TempString");
+	            	String[] parts = input.split(" ");
+	            	if(parts.length < 2||parts.length >3)
+	            		throw new IllegalArgumentException();
+	            	else if(parts.length == 2)
+	            	{
+	            		Critter.makeCritter(parts[1]);
+	            	}
+	            	else if(parts.length == 3)
+	            	{
+	            		int parse = Integer.parseInt(parts[2]);
+	            		for(int x = 0; x < parse; x++)
+	            		{
+	            			Critter.makeCritter(parts[1]);
+	            		}
+	            	}
 	            }
 	            else if(input.contains("stats"))
 	            {
-	            	
+	            	String[] parts = input.split(" ");
+	            	if(parts.length != 2)
+	            		throw new IllegalArgumentException();
+	            	List<Critter> list = Critter.getInstances(parts[1]);
+	            	Critter.runStats(list);
 	            }
 	            else if(input.equals("quit"))
 	            {
