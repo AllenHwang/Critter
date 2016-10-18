@@ -186,7 +186,7 @@ public abstract class Critter {
 		try {
 			crit_class = Class.forName(tempClass);
 		} catch (ClassNotFoundException e) {
-			throw new InvalidCritterException(critter_class_name);
+			throw new InvalidCritterException("");
 		}
 		
 		try {
@@ -201,23 +201,22 @@ public abstract class Critter {
 			population.add((Critter) critterNew);
 			
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidCritterException("");
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidCritterException("");
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidCritterException("");
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidCritterException("");
 		} catch (NoSuchMethodException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidCritterException("");
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidCritterException("");
 		}
 	}
 	
@@ -235,7 +234,7 @@ public abstract class Critter {
 		try {
 			crit_class = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			throw new InvalidCritterException(critter_class_name);
+			throw new InvalidCritterException("");
 		}
 		
 		for (Critter jiminy : population) {
