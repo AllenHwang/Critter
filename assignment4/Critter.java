@@ -239,7 +239,7 @@ public abstract class Critter {
 		}
 		
 		for (Critter jiminy : population) {
-			if (jiminy.getClass().getName().equals(critter_class_name)) {
+			if (crit_class.isInstance(jiminy)) {
 				result.add(jiminy);
 			}
 		}
