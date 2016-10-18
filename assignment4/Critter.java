@@ -164,23 +164,14 @@ public abstract class Critter {
 	public abstract void doTimeStep();
 	public abstract boolean fight(String oponent);
 	
-	/**
-	 * create and initialize a Critter subclass.
-	 * critter_class_name must be the unqualified name of a concrete subclass of Critter, if not,
-	 * an InvalidCritterException must be thrown.
-	 * (Java weirdness: Exception throwing does not work properly if the parameter has lower-case instead of
-	 * upper. For example, if craig is supplied instead of Craig, an error is thrown instead of
-	 * an Exception.)
-	 * @param critter_class_name
-	 * @throws InvalidCritterException
-	 */
 public static void makeCritter(String critter_class_name) throws InvalidCritterException {
 		
 		// create new critter object
-		Class<?> crit_class = null;
 		
+		Class<?> crit_class = null;
+		String tempClass = myPackage + "." + critter_class_name.substring(0, 1).toUpperCase() + critter_class_name.substring(1);
 		try {
-			crit_class = Class.forName(critter_class_name);
+			crit_class = Class.forName(tempClass);
 		} catch (ClassNotFoundException e) {
 			throw new InvalidCritterException(critter_class_name);
 		}
@@ -227,8 +218,9 @@ public static void makeCritter(String critter_class_name) throws InvalidCritterE
 		List<Critter> result = new java.util.ArrayList<Critter>();
 		
 		Class<?> crit_class;
+		String className = myPackage + "." + critter_class_name.substring(0, 1).toUpperCase() + critter_class_name.substring(1);
 		try {
-			crit_class = Class.forName(critter_class_name);
+			crit_class = Class.forName(className);
 		} catch (ClassNotFoundException e) {
 			throw new InvalidCritterException(critter_class_name);
 		}
