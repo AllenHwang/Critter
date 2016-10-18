@@ -1,15 +1,15 @@
 package assignment4;
 
 /*
- * This critter is a basic critter that models the motion patterns
- * of a knight on a chess board. Since he is a lone soldier, he only
- * sires one child for the entire duration of his lifetime. He also
- * has a high amount of health to begin with.
+ * This Critter picks an initial direction to go in.
+ * Once it picks a direction, it cannot change.
+ * Every time fight is called, it has a 50% chance of either wishing to fight or not fight.
+ *
  */
 public class Critter2 extends Critter{
 	
 	@Override
-	public String toString() { return "1"; }
+	public String toString() { return "2"; }
 	
 	private int dir;
 	
