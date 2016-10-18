@@ -455,6 +455,7 @@ public abstract class Critter {
 					{
 						second.energy += first.energy /2;
 						first.energy = 0;
+						break;
 					}
 					else
 					{
