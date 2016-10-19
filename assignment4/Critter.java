@@ -49,6 +49,19 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
+	
+	private int stepX(int stepsX) {
+		x_coord += stepsX;
+		x_coord = (x_coord + Params.world_width) % Params.world_width;
+		return x_coord;
+	}
+	
+	private int stepY(int stepsY) {
+		y_coord += stepsY;
+		y_coord = (y_coord + Params.world_height) % Params.world_height;
+		return y_coord;
+	}
+	
 	/**
 	 * Walks in a given direction; direction is determined from a number 0-7 and goes counter clockwise with 0 going to the right
 	 * It increases coordinates by one.
@@ -60,25 +73,23 @@ public abstract class Critter {
 		{
 			switch(direction)
 			{
-			case 0: x_coord++;
+			case 0: x_coord = stepX(1);
 			break;
-			case 1: x_coord++;y_coord--;
+			case 1: x_coord = stepX(1); y_coord = stepY(-1);
 			break;
-			case 2:y_coord--;
+			case 2: y_coord = stepY(-1);
 			break;
-			case 3 :y_coord--;x_coord++;
+			case 3: y_coord = stepY(-1); y_coord = stepX(-1);
 			break;
-			case 4 : x_coord--;
+			case 4: x_coord = stepX(-1);
 			break;
-			case 5 : y_coord++;x_coord--;
+			case 5: y_coord = stepY(1); x_coord = stepX(-1);
 			break;
-			case 6:y_coord++;
+			case 6: y_coord = stepY(1);
 			break;
-			case 7: y_coord++;x_coord++;
+			case 7: y_coord = stepY(1); x_coord = stepX(1);
 			break;
 			}
-			x_coord =(Params.world_width + x_coord) % Params.world_width;
-			y_coord = (Params.world_height + y_coord) % Params.world_height ;
 			energy -= Params.walk_energy_cost;
 			hasMoved=true;
 		}
@@ -97,32 +108,32 @@ public abstract class Critter {
 	protected final void run(int direction) {
 		if(!hasMoved)
 		{
-		switch(direction)
-		{
-			case 0: x_coord+=2;
+			switch(direction)
+			{
+			case 0: x_coord = stepX(2);
 			break;
-			case 1: x_coord+=2;y_coord-=2;
+			case 1: x_coord = stepX(2); y_coord = stepY(-2);
 			break;
-			case 2:y_coord-=2;
+			case 2: y_coord = stepY(-2);
 			break;
-			case 3 :y_coord-=2;x_coord+=2;
+			case 3: y_coord = stepY(-2); y_coord = stepX(-2);
 			break;
-			case 4 : x_coord-=2;
+			case 4: x_coord = stepX(-2);
 			break;
-			case 5 : y_coord+=2;x_coord-=2;
+			case 5: y_coord = stepY(2); x_coord = stepX(-2);
 			break;
-			case 6:y_coord+=2;
+			case 6: y_coord = stepY(2);
 			break;
-			case 7: y_coord+=2;x_coord+=2;
+			case 7: y_coord = stepY(2); x_coord = stepX(2);
 			break;
 			}
-		x_coord =(Params.world_width + x_coord) % Params.world_width;
-		y_coord = (Params.world_height + y_coord) % Params.world_height ;
-		hasMoved = true;
-		energy -= Params.run_energy_cost;
+			hasMoved = true;
+			energy -= Params.run_energy_cost;
 		}
 		else
+		{
 			energy -= Params.run_energy_cost;
+		}
 	}
 	/**
 	 * Creates a new offspring that has roughly half of its original energy
