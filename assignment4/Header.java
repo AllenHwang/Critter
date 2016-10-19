@@ -1,5 +1,5 @@
 package assignment4;
-/* CRITTERS <MyClass.java>
+/* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Allen Hwang
  * ah45755

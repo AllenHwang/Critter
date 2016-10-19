@@ -81,6 +81,7 @@ public class Main {
 	            }
 	            else if(input.contains("step"))
 	            {
+	            	
 	            	String[] parts = input.split(" ");
 	            	if(parts.length ==1&&input.equals("step"))
 	            	{
@@ -96,14 +97,14 @@ public class Main {
 	            	}
 	            	else
 	            	{
-	            		throw new IllegalArgumentException();
+	            		throw new InvalidCritterException("");
 	            	}
 	            }
 	            else if(input.contains("seed"))
 	            {
 	            	String[] parts = input.split(" ");
-	            	if(parts.length!= 2)
-	            		throw new IllegalArgumentException();
+	            	if(parts.length!= 2||!parts[0].equals("seed"))
+	            		throw new InvalidCritterException("");
 	            	else
 	            	{
 	            		Critter.setSeed(Long.parseLong(parts[1]));
@@ -113,7 +114,7 @@ public class Main {
 	            else if(input.contains("make"))
 	            {
 	            	String[] parts = input.split(" ");
-	            	if(parts.length < 2||parts.length >3)
+	            	if(parts.length < 2||parts.length >3||!parts[0].equals("make"))
 	            		throw new IllegalArgumentException();
 	            	else if(parts.length == 2)
 	            	{
@@ -131,7 +132,7 @@ public class Main {
 	            else if(input.contains("stats"))
 	            {
 	            	String[] parts = input.split(" ");
-	            	if(parts.length != 2)
+	            	if(parts.length != 2||!parts[0].equals("stats"))
 	            		throw new IllegalArgumentException();
 	            	List<Critter> list = Critter.getInstances(parts[1]);
 	            	Critter.runStats(list);

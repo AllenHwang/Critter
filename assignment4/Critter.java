@@ -182,10 +182,14 @@ public abstract class Critter {
 		// create new critter object
 		
 		Class<?> crit_class = null;
-		String tempClass = myPackage + "." + critter_class_name.substring(0, 1).toUpperCase() + critter_class_name.substring(1);
+		String tempClass = myPackage + "." + critter_class_name;
 		try {
 			crit_class = Class.forName(tempClass);
 		} catch (ClassNotFoundException e) {
+			throw new InvalidCritterException("");
+		}
+		catch(NoClassDefFoundError e)
+		{
 			throw new InvalidCritterException("");
 		}
 		
@@ -203,19 +207,14 @@ public abstract class Critter {
 		} catch (InstantiationException e) {
 			throw new InvalidCritterException("");
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			throw new InvalidCritterException("");
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			throw new InvalidCritterException("");
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			throw new InvalidCritterException("");
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			throw new InvalidCritterException("");
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			throw new InvalidCritterException("");
 		}
 	}
@@ -230,12 +229,17 @@ public abstract class Critter {
 		List<Critter> result = new java.util.ArrayList<Critter>();
 		
 		Class<?> crit_class;
-		String className = myPackage + "." + critter_class_name.substring(0, 1).toUpperCase() + critter_class_name.substring(1);
+		String className = myPackage + "." + critter_class_name;
 		try {
 			crit_class = Class.forName(className);
 		} catch (ClassNotFoundException e) {
 			throw new InvalidCritterException("");
 		}
+		catch(NoClassDefFoundError e)
+		{
+			throw new InvalidCritterException("");
+		}
+		
 		
 		for (Critter jiminy : population) {
 			if (crit_class.isInstance(jiminy)) {
