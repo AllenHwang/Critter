@@ -14,13 +14,7 @@ public class Critter1 extends Critter {
 	private int dir;
 	
 	public Critter1() {
-		int dir = Critter.getRandomInt(8);
-		try {
-			Critter.makeCritter(this.getClass().getName());
-		} catch (InvalidCritterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		dir = Critter.getRandomInt(8);
 	}
 	
 	// 1 in 4 chance of fighting
@@ -36,9 +30,9 @@ public class Critter1 extends Critter {
 	@Override
 	public void doTimeStep() {
 		if (dir%2 == 1) {
-			walk(dir);
+			super.walk(dir);
 		} else {
-			run(dir);
+			super.run(dir);
 		}
 	}
 }
