@@ -104,7 +104,7 @@ public class Main {
 	            {
 	            	String[] parts = input.split(" ");
 	            	if(parts.length!= 2||!parts[0].equals("seed"))
-	            		throw new InvalidCritterException("");
+	            		System.out.println("error proccessing: " + input);
 	            	else
 	            	{
 	            		Critter.setSeed(Long.parseLong(parts[1]));
@@ -115,7 +115,7 @@ public class Main {
 	            {
 	            	String[] parts = input.split(" ");
 	            	if(parts.length < 2||parts.length >3||!parts[0].equals("make"))
-	            		throw new IllegalArgumentException();
+	            		System.out.println("error proccessing: " + input);
 	            	else if(parts.length == 2)
 	            	{
 	            		Critter.makeCritter(parts[1]);
@@ -133,7 +133,7 @@ public class Main {
 	            {
 	            	String[] parts = input.split(" ");
 	            	if(parts.length != 2||!parts[0].equals("stats"))
-	            		throw new IllegalArgumentException();
+	            		System.out.println("error proccessing: " + input);
 	            	List<Critter> list = Critter.getInstances(parts[1]);
 	            	Critter.runStats(list);
 	            }
@@ -143,22 +143,13 @@ public class Main {
 	            }
 	            else
 	            {
-	            	throw new IllegalArgumentException();//throw exception; everything above is part of a big try catch block.
+	            	System.out.println("invalid command: " + input);
 	            }
         	}
-        	catch(NumberFormatException e)
+        	catch(Exception e)
         	{
-        		System.out.println("error processing: " +input);
+        		System.out.println("error proccessing: " + input);
         	}
-        	catch(InvalidCritterException e)
-        	{
-        		System.out.println("error processing: " +input);
-        	}
-        	catch(IllegalArgumentException e)
-        	{
-        		System.out.println("invalid command: " + input);
-        	}
-
         }while(loop);
         /* Write your code above */
         System.out.flush();

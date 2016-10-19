@@ -188,10 +188,6 @@ public abstract class Critter {
 		} catch (ClassNotFoundException e) {
 			throw new InvalidCritterException("");
 		}
-		catch(NoClassDefFoundError e)
-		{
-			throw new InvalidCritterException("");
-		}
 		
 		try {
 			Object critterNew = crit_class.getConstructor().newInstance();
@@ -233,10 +229,6 @@ public abstract class Critter {
 		try {
 			crit_class = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			throw new InvalidCritterException("");
-		}
-		catch(NoClassDefFoundError e)
-		{
 			throw new InvalidCritterException("");
 		}
 		
