@@ -1,4 +1,6 @@
-/* * EE422C Project 4 submission by
+
+/* CRITTERS Critter.java
+ * EE422C Project 4 submission by
  * Allen Hwang
  * ah45755
  * 16445
@@ -7,9 +9,10 @@
  * 16455
  * Slip days used: <0>
  * Fall 2016
+ * GIT URL: https://github.com/HorizonStrider/Critter.git
  */
 package assignment4;
-/*
+/**
  * This critter walks around the world
  * Every time it walks, it changes its ability to fight
  * Fight simply returns its current ability to fight

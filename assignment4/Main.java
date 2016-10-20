@@ -1,4 +1,5 @@
-/* CRITTERS Main.java
+
+/* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Allen Hwang
  * ah45755
@@ -8,6 +9,7 @@
  * 16455
  * Slip days used: <0>
  * Fall 2016
+ * GIT URL: https://github.com/HorizonStrider/Critter.git
  */
 package assignment4; // cannot be in default package
 import java.util.ArrayList;
@@ -97,7 +99,7 @@ public class Main {
 	            	}
 	            	else
 	            	{
-	            		throw new InvalidCritterException("");
+	            		System.out.println("error proccessing: " + input);
 	            	}
 	            }
 	            else if(input.contains("seed"))

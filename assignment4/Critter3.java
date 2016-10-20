@@ -1,4 +1,5 @@
-/*Critters Critter3.Java
+
+/* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Allen Hwang
  * ah45755
@@ -8,10 +9,10 @@
  * 16455
  * Slip days used: <0>
  * Fall 2016
- */ 
- 
+ * GIT URL: https://github.com/HorizonStrider/Critter.git
+ */
 package assignment4;
-/*
+/**
  * This critter either walks or runs, depending on if run is on cooldown.
  * If run is on cooldown(true), then this Critter walks.  else it runs(and run is put back on cooldown)
  * If the critter encounters a fight, cooldown is no longer on cooldown, and if it wins the fight, then the critter may run the next time step.

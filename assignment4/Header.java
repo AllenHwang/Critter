@@ -9,4 +9,5 @@ package assignment4;
  * 16455
  * Slip days used: <0>
  * Fall 2016
+ * GIT URL: https://github.com/HorizonStrider/Critter.git
  */
