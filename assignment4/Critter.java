@@ -43,7 +43,8 @@ public abstract class Critter {
 	}
 	
 	
-	/* a one-character long string that visually depicts your critter in the ASCII interface */
+	/**
+	 *  a one-character long string that visually depicts your critter in the ASCII interface */
 	public String toString() { return ""; }
 	
 	private int energy = 0;
@@ -51,13 +52,22 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
-	
+	/**
+	 *  Increments the x_coord by the number given.
+	 * @param stepsX The steps that x will move by (a negative means that the critter will move left)
+	 * @return The x_coord after the stepX, accounting for moving across borders.
+	 */
 	private int stepX(int stepsX) {
 		x_coord += stepsX;
 		x_coord = (x_coord + Params.world_width) % Params.world_width;
 		return x_coord;
 	}
 	
+	/**
+	 * Increments the y_coord by the number given.
+	 * @param stepsY the steps that y will move by (a negative means that the critter will move up)
+	 * @return The y_coord after the stepY, accounting for moving across borders.
+	 */
 	private int stepY(int stepsY) {
 		y_coord += stepsY;
 		y_coord = (y_coord + Params.world_height) % Params.world_height;
