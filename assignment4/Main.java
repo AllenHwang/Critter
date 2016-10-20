@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.*;
+import java.lang.reflect.*;
 
 
 /*
@@ -77,9 +78,18 @@ public class Main {
         {
         	try{
 	            input = kb.nextLine();
-	            if(input.equals("show"))
-	            {
+	            if(input.contains("show"))
+	            {	if(input.equals("show"))
 	            	Critter.displayWorld();
+	            else
+	            	System.out.println("error processing: " + input);
+	            }
+	            else if(input.contains("quit"))
+	            {
+	            	if(input.equals("quit"))
+	            	loop = false;
+	            	else
+	            		System.out.println("invalid command: " + input);
 	            }
 	            else if(input.contains("step"))
 	            {
@@ -99,14 +109,14 @@ public class Main {
 	            	}
 	            	else
 	            	{
-	            		System.out.println("error proccessing: " + input);
+	            		System.out.println("error processing: " + input);
 	            	}
 	            }
 	            else if(input.contains("seed"))
 	            {
 	            	String[] parts = input.split(" ");
 	            	if(parts.length!= 2||!parts[0].equals("seed"))
-	            		System.out.println("error proccessing: " + input);
+	            		System.out.println("error processing: " + input);
 	            	else
 	            	{
 	            		Critter.setSeed(Long.parseLong(parts[1]));
@@ -117,7 +127,7 @@ public class Main {
 	            {
 	            	String[] parts = input.split(" ");
 	            	if(parts.length < 2||parts.length >3||!parts[0].equals("make"))
-	            		System.out.println("error proccessing: " + input);
+	            		System.out.println("error processing: " + input);
 	            	else if(parts.length == 2)
 	            	{
 	            		Critter.makeCritter(parts[1]);
@@ -135,22 +145,31 @@ public class Main {
 	            {
 	            	String[] parts = input.split(" ");
 	            	if(parts.length != 2||!parts[0].equals("stats"))
-	            		System.out.println("error proccessing: " + input);
-	            	List<Critter> list = Critter.getInstances(parts[1]);
-	            	Critter.runStats(list);
-	            }
-	            else if(input.equals("quit"))
-	            {
-	            	loop = false;
+	            		System.out.println("error processing: " + input);
+	            	else
+	            	{
+	            		try{
+	            			String packageName = Critter.class.getPackage().toString().split(" ")[1];
+	            		
+	            		List<Critter> list = Critter.getInstances(parts[1]);
+	            		Class <?> overload = Class.forName(packageName + "." + parts[1]);
+	            		Method stats = overload.getMethod("runStats", List.class);
+	            		stats.invoke(overload, list);
+	            		}
+	            		catch(Exception e)
+	            		{
+	            			System.out.println("error processing: " + input);
+	            		}
+	            	}
 	            }
 	            else
 	            {
-	            	System.out.println("invalid command: " + input);
+	            	System.out.println("invalid command: " + input );
 	            }
         	}
         	catch(Exception e)
         	{
-        		System.out.println("error proccessing: " + input);
+        		System.out.println("error processing: " + input);
         	}
         }while(loop);
         /* Write your code above */
