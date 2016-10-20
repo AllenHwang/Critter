@@ -115,7 +115,7 @@ public abstract class Critter {
 	 * Runs in a given direction, using 0-7, with 0 representing right and going counter clockwise incrementally.
 	 * It increases coordinates by two
 	 * It decrements energy by the run energy.
-	 * @param direction
+	 * @param direction the direction that the critter will run in
 	 */
 	protected final void run(int direction) {
 		if(!hasMoved)
@@ -196,8 +196,8 @@ public abstract class Critter {
 	 * upper. For example, if craig is supplied instead of Craig, an error is
 		thrown instead of
 	 * an Exception.)
-	 * @param critter_class_name  
-	 * @throws InvalidCritterException 
+	 * @param critter_class_name  The name of the critter to be made
+	 * @throws InvalidCritterException Throws this exception if the critter does not exist
 	 * */
 	 
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
@@ -242,7 +242,7 @@ public abstract class Critter {
 	 * Gets a list of critters of a specific type.
 	 * @param critter_class_name What kind of Critter is to be listed.  Unqualified class name.
 	 * @return List of Critters.
-	 * @throws InvalidCritterException
+	 * @throws InvalidCritterException Throws this exception if the critter does not exist
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
@@ -357,7 +357,7 @@ public abstract class Critter {
 	 * 3) Algae are added into the world.
 	 * 4) Any offspring are added into the working population.
 	 * 5) Rest energy cost is applied
-	 * 6) Any dead critters (energy <= 0) are removed.
+	 * 6) Any dead critters (energy is less than or equal to zero) are removed.
 	 */
 	public static void worldTimeStep() {
 		for(int x = 0; x < population.size(); x++)
